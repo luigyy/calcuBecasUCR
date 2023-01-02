@@ -4,7 +4,7 @@ import "./index.css";
 
 function App() {
   return (
-    <div>
+    <div className="">
       <Navbar />
       {/* main  */}
       <div className="md:h-[calc(100vh-100px)]">

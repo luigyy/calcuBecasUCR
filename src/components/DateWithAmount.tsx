@@ -26,6 +26,26 @@ const DateWithAmount: React.FC<DateWithAmountProps> = ({
   dates,
   reubicaException,
 }) => {
+  const formatDate = () => {
+    const monthNames = [
+      "Enero",
+      "Febrero",
+      "Marzo",
+      "Abril",
+      "Mayo",
+      "Junio",
+      "Julio",
+      "Agosto",
+      "Septiembre",
+      "Octubre",
+      "Noviembre",
+      "Diciembre",
+    ];
+    const monthName = monthNames[dates.startDate.getMonth()];
+    const date = dates.startDate.getDate();
+    const formattedDate = monthName + ", " + date.toString();
+    return formattedDate;
+  };
   //
   function getWindowSize() {
     const { innerWidth } = window;
@@ -80,7 +100,8 @@ const DateWithAmount: React.FC<DateWithAmountProps> = ({
     <div className="mt-5  ">
       <div className="flex items-center justify-around md:flex-col  w-full mx-auto">
         <span className=" font-semibold px-4 py-2  bg-primary rounded-3xl text-center border-primary">
-          {dates.startDate.toLocaleDateString("eu-GB")}
+          {formatDate()}
+          {/* {dates.startDate.toLocaleDateString("eu-GB")} */}
         </span>
         <span className="text-4xl my-2 flex justify-center text-center">
           {windowSize! > 768 ? <BsArrowDown /> : <BsArrowRight />}
