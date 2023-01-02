@@ -13,8 +13,17 @@ const InputFields: React.FC<InputFieldsProps> = ({
 }) => {
   return (
     <div className="  form-control">
-      <label className="input-group input-group-vertical input-group-sm">
-        <span className="bg-white font-semibold">{inputFor}</span>
+      <label className="items-center input-group input-group-vertical input-group-sm">
+        <span className="bg-white font-semibold">
+          {inputFor}{" "}
+          <span
+            className={`text-[10px] text-gray-400 italic bg-white ${
+              inputFor === "Reubica" ? "hidden" : ""
+            }`}
+          >
+            (por dia)
+          </span>
+        </span>
         <input
           onChange={(e) => inputHandler(e)}
           value={inputValue}

@@ -79,14 +79,6 @@ export const calculate5 = (
   return daysToCover * amountPerDay + montos.reubica;
 };
 
-console.log(
-  calculate5(new Date("01/11/2023"), new Date("01/30/2023"), {
-    reubica: 79545,
-    alimentacion: 3029,
-    gastos: 2522,
-  })
-);
-
 /**
  *
  * @param startDate day of deposit
