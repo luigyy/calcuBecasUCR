@@ -28,7 +28,7 @@ const datesBetween = (
   // Calculate days between dates
   var millisecondsPerDay = 86400 * 1000; // Day in milliseconds
   startDate.setHours(0, 0, 0, 1); // Start just after midnight
-  endDate.setHours(23, 59, 59, 999); // End just before midnight
+  endDate.setHours(0, 0, 0, 1); // End just before midnight //change this
   //@ts-ignore
   var diff = endDate - startDate; // Milliseconds between datetime objects
   var days = Math.ceil(diff / millisecondsPerDay);
@@ -90,9 +90,13 @@ export const calculate5 = (
 export const calculate4 = (
   startDate: Date,
   endDate: Date,
-  reubica: number,
-  alimentacion: number,
-  gastos: number
+  montos: {
+    reubica: number;
+    alimentacion: number;
+    gastos: number;
+  }
 ): number => {
-  return 0;
+  const daysToCover = datesBetween(startDate, endDate, { bussinessDays: true });
+  const amountPerDay = montos.alimentacion + montos.gastos;
+  return daysToCover * amountPerDay + montos.reubica;
 };

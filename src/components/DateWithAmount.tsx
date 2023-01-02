@@ -70,17 +70,16 @@ const DateWithAmount: React.FC<DateWithAmountProps> = ({
       gastos,
     });
 
+    console.log(dates);
+
     setTotal(total);
   };
   //
   //
-  useEffect(() => {
-    calculateTotal();
-  }, []);
 
   useEffect(() => {
     calculateTotal();
-  }, [reubica, alimentacion, gastos]);
+  }, [reubica, alimentacion, gastos, calculatorFunc]);
   //
   //
   useEffect(() => {
