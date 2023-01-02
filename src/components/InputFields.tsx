@@ -1,16 +1,18 @@
 import React from "react";
 
-interface InputFieldsProps {}
+interface InputFieldsProps {
+  inputFor: string;
+}
 
-const InputFields: React.FC<InputFieldsProps> = ({}) => {
+const InputFields: React.FC<InputFieldsProps> = ({ inputFor }) => {
   return (
-    <div className="form-control w-32">
-      <label className="input-group input-group-vertical">
-        <span className="btn btn-secondary ">Alimentación</span>
+    <div className="  form-control">
+      <label className="input-group input-group-vertical input-group-sm">
+        <span className="bg-white font-semibold">{inputFor}</span>
         <input
           type="text"
-          placeholder="info@site.com"
-          className="input input-bordered"
+          placeholder="0.00₡"
+          className="input input-sm input-bordered   w-36"
         />
       </label>
     </div>

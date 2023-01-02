@@ -15,19 +15,21 @@ const Main: React.FC<MainProps> = ({}) => {
         <button className="btn btn-primary">Beca 4</button>
         <button className="btn btn-primary">Beca 5</button>
       </div>
-      {/* dates container  */}
-      <div className="flex justify-around flex-wrap w-[90%] max-w-[650px] m-10 mx-auto">
-        <InputFields />
-        <InputFields />
-        <InputFields />
-      </div>
-      <div className="mt-10 flex justify-between  w-[90%] md:max-w-[700px] mx-auto py-5 px-10 ">
-        <DateWithAmount />
-        <DateWithAmount />
-        <DateWithAmount />
-        <DateWithAmount />
+      {/* data container  */}
+      <div></div>
+      <div className="flex justify-center md:justify-around md:flex-nowrap flex-wrap md:w-[80%] w-full m-10 mx-auto">
+        <InputFields inputFor="Alimentación" />
+        <InputFields inputFor="Reubica" />
+        <InputFields inputFor="Gastos de C." />
       </div>
       {/* dates container  */}
+      <div className="mt-10 md:flex md:justify-around   w-full md:w-[90%] md:max-w-[700px] mx-auto py-5 px-10 ">
+        <DateWithAmount />
+        <DateWithAmount />
+        <DateWithAmount />
+      </div>
+      {/* dates container  */}
+      {/* data container  */}
     </div>
   );
 };
