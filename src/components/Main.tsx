@@ -7,11 +7,18 @@ import { calculate4, calculate5 } from "../functions/calcularMontos";
 interface MainProps {}
 
 const depositos = {
-  verano22: [
-    { startDate: new Date("01/11/2023"), endDate: new Date("01/30/2023") },
-    { startDate: new Date("01/30/2023"), endDate: new Date("02/15/2023") },
-    { startDate: new Date("02/15/2023"), endDate: new Date("02/30/2023") },
-  ],
+  verano22: {
+    fechasAlimentacion: [
+      { startDate: new Date("01/02/2023"), endDate: new Date("01/29/2023") },
+      { startDate: new Date("01/30/2023"), endDate: new Date("02/14/2023") },
+      { startDate: new Date("02/15/2023"), endDate: new Date("03/04/2023") },
+    ],
+    fechasGastos: [
+      { startDate: new Date("01/02/2023"), endDate: new Date("01/30/2023") },
+      { startDate: new Date("01/31/2023"), endDate: new Date("02/15/2023") },
+      { startDate: new Date("02/16/2023"), endDate: new Date("03/04/2023") },
+    ],
+  },
 };
 const Main: React.FC<MainProps> = ({}) => {
   //states
@@ -107,8 +114,10 @@ const Main: React.FC<MainProps> = ({}) => {
       </div>
       {/* dates container  */}
       <div className="mt-10 md:flex md:justify-around   w-full md:w-[90%] md:max-w-[700px] mx-auto py-5 px-10 ">
-        {dates.map((item, index) => (
+        {dates.fechasAlimentacion.map((item, index) => (
           <DateWithAmount
+            fechasAlimentacion={item}
+            fechasGastos={dates.fechasGastos[index]}
             key={index}
             dates={item}
             calculatorFunc={calculatorFunc}

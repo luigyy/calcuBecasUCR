@@ -29,7 +29,7 @@ const InputFields: React.FC<InputFieldsProps> = ({
           value={inputValue}
           type="number"
           placeholder="0.00₡"
-          className="input input-sm input-bordered   w-36"
+          className=" input input-sm input-bordered   w-36"
         />
       </label>
     </div>

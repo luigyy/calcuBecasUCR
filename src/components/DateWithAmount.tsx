@@ -4,7 +4,13 @@ import { datesBetween } from "../functions/calcularMontos";
 
 interface DateWithAmountProps {
   reubicaException?: { date: Date };
+  // dates2: {
+  //   fechasAlimentacion: [{ startDate: Date; endDate: Date }];
+  //   fechasGastos: [{ startDate: Date; endDate: Date }];
+  // };
   dates: { startDate: Date; endDate: Date };
+  fechasAlimentacion: { startDate: Date; endDate: Date };
+  fechasGastos: { startDate: Date; endDate: Date };
   reubica: number;
   alimentacion: number;
   gastos: number;
@@ -26,6 +32,8 @@ const DateWithAmount: React.FC<DateWithAmountProps> = ({
   calculatorFunc,
   dates,
   reubicaException,
+  fechasAlimentacion,
+  fechasGastos,
 }) => {
   const formatDate = () => {
     const monthNames = [
@@ -53,9 +61,38 @@ const DateWithAmount: React.FC<DateWithAmountProps> = ({
     return innerWidth;
   }
   //
+  const [totalAlimentacion, setTotalAlimentacion] = useState<number>(0);
+  const [totalGastos, setTotalGastos] = useState<number>(0);
   const [windowSize, setWindowSize] = useState<number>(getWindowSize());
   const [total, setTotal] = useState<number>(0);
   //
+  const calculateAlimentacion = () => {
+    //calculate totalAlimentacion
+    const tempAlimentacion = calculatorFunc(
+      fechasAlimentacion.startDate,
+      fechasAlimentacion.endDate,
+      {
+        reubica: 0,
+        alimentacion,
+        gastos: 0,
+      }
+    );
+    setTotalAlimentacion(tempAlimentacion);
+  };
+  //
+  const calculateGastos = () => {
+    //calculate totalGastos
+    const tempGastos = calculatorFunc(
+      fechasGastos.startDate,
+      fechasGastos.endDate,
+      {
+        reubica: 0,
+        alimentacion: 0,
+        gastos,
+      }
+    );
+    setTotalGastos(tempGastos);
+  };
   //
   const calculateTotal = () => {
     var tempReubica = reubica;
@@ -65,22 +102,21 @@ const DateWithAmount: React.FC<DateWithAmountProps> = ({
     ) {
       tempReubica = 0;
     }
-    const total = calculatorFunc(dates.startDate, dates.endDate, {
-      reubica: tempReubica,
-      alimentacion,
-      gastos,
-    });
-
-    console.log(dates);
-
-    setTotal(total);
+    setTotal(totalAlimentacion + totalGastos + tempReubica);
   };
   //
-  //
-
   useEffect(() => {
+    calculateAlimentacion();
+    calculateGastos();
     calculateTotal();
-  }, [reubica, alimentacion, gastos, calculatorFunc]);
+  }, [
+    reubica,
+    alimentacion,
+    gastos,
+    calculatorFunc,
+    totalAlimentacion,
+    totalGastos,
+  ]);
   //
   //
   useEffect(() => {
