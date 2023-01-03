@@ -72,11 +72,22 @@ export const calculate5 = (
     reubica: number;
     alimentacion: number;
     gastos: number;
-  }
+  },
+  alimentacionLunesADomingo: boolean
 ): number => {
-  const daysToCover = datesBetween(startDate, endDate);
-  const amountPerDay = montos.alimentacion + montos.gastos;
-  return daysToCover * amountPerDay + montos.reubica;
+  //check if alimentacio l/v
+  if (alimentacionLunesADomingo) {
+    const daysToCover = datesBetween(startDate, endDate);
+    const amountPerDay = montos.alimentacion + montos.gastos;
+    return daysToCover * amountPerDay + montos.reubica;
+  }
+  const daysToCoverForAlimentacion = datesBetween(startDate, endDate, {
+    bussinessDays: true,
+  });
+  const totalAlimentacion = daysToCoverForAlimentacion * montos.alimentacion;
+  const daysToCoverForGastos = datesBetween(startDate, endDate);
+  const totalGastos = daysToCoverForGastos * montos.gastos;
+  return totalAlimentacion + totalGastos + montos.reubica;
 };
 
 /**

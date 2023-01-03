@@ -8,6 +8,7 @@ interface DateWithAmountProps {
   dates: { startDate: Date; endDate: Date };
   fechasAlimentacion: { startDate: Date; endDate: Date };
   fechasGastos: { startDate: Date; endDate: Date };
+  alimentacionLunesADomingo: boolean;
   reubica: number;
   alimentacion: number;
   gastos: number;
@@ -19,7 +20,8 @@ interface DateWithAmountProps {
       reubica: number;
       alimentacion: number;
       gastos: number;
-    }
+    },
+    alimentacionLunesADomingo: boolean
   ) => number;
 }
 
@@ -34,6 +36,7 @@ const DateWithAmount: React.FC<DateWithAmountProps> = ({
   fechasAlimentacion,
   fechasGastos,
   fechasDepositos,
+  alimentacionLunesADomingo,
 }) => {
   const formatDate = () => {
     const monthNames = [
@@ -54,7 +57,7 @@ const DateWithAmount: React.FC<DateWithAmountProps> = ({
     const depositoAlimentacion = fechasDepositos.alimentacion.getDate();
     const depositoGastos = fechasDepositos.gastos.getDate();
     const formattedDate = (
-      <p>
+      <p className="text-gray-300">
         {monthName} (
         <span className={`${desglose ? "text-green-500" : ""}`}>
           {depositoAlimentacion}
@@ -84,6 +87,7 @@ const DateWithAmount: React.FC<DateWithAmountProps> = ({
   //
   const calculateAlimentacion = () => {
     //calculate totalAlimentacion
+
     const tempAlimentacion = calculatorFunc(
       fechasAlimentacion.startDate,
       fechasAlimentacion.endDate,
@@ -91,9 +95,10 @@ const DateWithAmount: React.FC<DateWithAmountProps> = ({
         reubica: 0,
         alimentacion,
         gastos: 0,
-      }
+      },
+      alimentacionLunesADomingo
     );
-    setTotalAlimentacion(tempAlimentacion);
+    return setTotalAlimentacion(tempAlimentacion);
   };
   //
   const calculateGastos = () => {
@@ -105,7 +110,8 @@ const DateWithAmount: React.FC<DateWithAmountProps> = ({
         reubica: 0,
         alimentacion: 0,
         gastos,
-      }
+      },
+      alimentacionLunesADomingo
     );
     setTotalGastos(tempGastos);
   };
@@ -137,6 +143,7 @@ const DateWithAmount: React.FC<DateWithAmountProps> = ({
     calculatorFunc,
     totalAlimentacion,
     totalGastos,
+    alimentacionLunesADomingo,
   ]);
   //
   //

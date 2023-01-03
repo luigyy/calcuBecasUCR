@@ -31,7 +31,8 @@ const Main: React.FC<MainProps> = ({}) => {
     (
       startDate: Date,
       endDate: Date,
-      montos: { reubica: number; alimentacion: number; gastos: number }
+      montos: { reubica: number; alimentacion: number; gastos: number },
+      alimentacionLunesADomingo: boolean
     ) => number
   >(() => calculate5);
 
@@ -41,8 +42,10 @@ const Main: React.FC<MainProps> = ({}) => {
     montosSedeCentral.alimentacion
   );
   const [reubica, setReubica] = useState<number>(montosSedeCentral.reubica);
-  const [dates, setDates] = useState(depositos.verano22);
+  const [dates, setDates] = useState(depositos.verano22); //ciclo
   const [desglose, setDesglose] = useState<boolean>(false);
+  const [alimentacionLunesADomingo, setAlimentacionLunesADomingo] =
+    useState<boolean>(true);
 
   //states
   //handlers
@@ -69,7 +72,6 @@ const Main: React.FC<MainProps> = ({}) => {
       setCalculatorFunc(() => calculate5);
     }
   }, [beca]);
-
   //handlers
   return (
     <div className="mt-10">
@@ -101,22 +103,38 @@ const Main: React.FC<MainProps> = ({}) => {
       </div>
       {/* data container  */}
       <div></div>
-      <div className="flex justify-center md:justify-around md:flex-nowrap flex-wrap md:w-[80%] w-full m-10 mx-auto">
-        <InputFields
-          inputFor="Alimentación"
-          inputValue={alimentacion}
-          inputHandler={handleAlimentacion}
-        />
-        <InputFields
-          inputFor="Reubica"
-          inputValue={reubica}
-          inputHandler={handleReubica}
-        />
+      <div className="flex justify-center md:justify-around md:flex-nowrap flex-wrap md:w-[80%] w-full m-10 mb-20 md:mb-10 mx-auto">
         <InputFields
           inputFor="Gastos de C."
           inputValue={gastos}
           inputHandler={handleGastos}
         />
+
+        <InputFields
+          inputFor="Reubica"
+          inputValue={reubica}
+          inputHandler={handleReubica}
+        />
+        <div>
+          <InputFields
+            inputFor="Alimentación"
+            inputValue={alimentacion}
+            inputHandler={handleAlimentacion}
+          />
+          <div className="mt-2 flex flex-col justify-center ">
+            <p className="text-center text-sm italic">
+              {alimentacionLunesADomingo ? "L-D" : "L-V"}
+            </p>
+            <input
+              checked={alimentacionLunesADomingo}
+              onChange={() =>
+                setAlimentacionLunesADomingo(!alimentacionLunesADomingo)
+              }
+              type="checkbox"
+              className="toggle toggle-info toggle-sm mx-auto mt-1 "
+            />
+          </div>
+        </div>
       </div>
       <div className="w-full ">
         <div className="flex flex-col justify-center">
@@ -133,6 +151,7 @@ const Main: React.FC<MainProps> = ({}) => {
       <div className="mt-7 md:flex md:justify-around   w-full md:w-[90%] md:max-w-[700px] mx-auto py-5 px-10 ">
         {dates.fechasAlimentacion.map((item, index) => (
           <DateWithAmount
+            alimentacionLunesADomingo={alimentacionLunesADomingo}
             desglose={desglose}
             fechasDepositos={dates.fechasDepositos[index]}
             fechasAlimentacion={item}
