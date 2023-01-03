@@ -111,7 +111,7 @@ const Main: React.FC<MainProps> = ({}) => {
         </div>
 
         <div>
-          <button onClick={() => handleBeca("5")} className="btn btn-primary">
+          <button onClick={() => handleBeca("5")} className=" btn btn-primary">
             Beca 5
           </button>
           <p className="text-center text-[12px] italic text-red-500">
@@ -139,8 +139,11 @@ const Main: React.FC<MainProps> = ({}) => {
             inputValue={alimentacion}
             inputHandler={handleAlimentacion}
           />
-          <div className="mt-2 flex flex-col justify-center ">
-            <p className="text-center text-sm italic">
+          <div
+            className=" tooltip tooltip-bottom mt-2 flex flex-col justify-center "
+            data-tip="Aplica para alimentación"
+          >
+            <p className="text-center text-sm italic ">
               {alimentacionLunesADomingo ? "L-D" : "L-V"}
             </p>
             <input
