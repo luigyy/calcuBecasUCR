@@ -10,7 +10,7 @@ const depositos = {
   verano22: [
     { startDate: new Date("01/11/2023"), endDate: new Date("01/30/2023") },
     { startDate: new Date("01/30/2023"), endDate: new Date("02/15/2023") },
-    { startDate: new Date("02/15/2023"), endDate: new Date("02/25/2023") },
+    { startDate: new Date("02/15/2023"), endDate: new Date("02/30/2023") },
   ],
 };
 const Main: React.FC<MainProps> = ({}) => {

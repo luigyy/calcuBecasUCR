@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BsArrowDown, BsArrowRight } from "react-icons/bs";
+import { datesBetween } from "../functions/calcularMontos";
 
 interface DateWithAmountProps {
   reubicaException?: { date: Date };
@@ -98,7 +99,12 @@ const DateWithAmount: React.FC<DateWithAmountProps> = ({
   return (
     <div className="mt-5  ">
       <div className="flex items-center justify-around md:flex-col  w-full mx-auto">
-        <span className=" font-semibold px-4 py-2  bg-primary rounded-3xl text-center border-primary">
+        <span
+          className="tooltip tooltip-top tooltip-primary font-semibold px-4 py-2  bg-primary rounded-3xl text-center border-primary"
+          data-tip={
+            "cubre " + datesBetween(dates.startDate, dates.endDate) + " dias"
+          }
+        >
           {formatDate()}
           {/* {dates.startDate.toLocaleDateString("eu-GB")} */}
         </span>

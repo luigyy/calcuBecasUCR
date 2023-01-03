@@ -6,7 +6,7 @@
  *
  * @returns number of dates between date1 and date2,if @param bussinessDays is set to true, calculates the number of bussiness days
  */
-const datesBetween = (
+export const datesBetween = (
   startDate: Date,
   endDate: Date,
   bussinessDays?: { bussinessDays: boolean }
