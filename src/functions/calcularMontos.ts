@@ -97,6 +97,6 @@ export const calculate4 = (
   }
 ): number => {
   const daysToCover = datesBetween(startDate, endDate, { bussinessDays: true });
-  const amountPerDay = montos.alimentacion + montos.gastos;
+  const amountPerDay = montos.alimentacion; // + montos.gastos; //al parecer beca4 no incluye gastos
   return daysToCover * amountPerDay + montos.reubica;
 };
