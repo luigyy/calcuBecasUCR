@@ -72,6 +72,24 @@ const Main: React.FC<MainProps> = ({}) => {
       setCalculatorFunc(() => calculate5);
     }
   }, [beca]);
+  //
+  //im sure theres a cleanest way to do this
+  useEffect(() => {
+    if (beca === "4") {
+      setAlimentacionLunesADomingo(false);
+    }
+    if (beca === "5") {
+      //@ts-ignore
+      setAlimentacionLunesADomingo((prev) =>
+        prev === false ? !prev : alimentacionLunesADomingo
+      );
+    }
+  }, [beca]);
+  useEffect(() => {
+    if (beca === "4") {
+      setAlimentacionLunesADomingo(false);
+    }
+  }, [alimentacionLunesADomingo]);
   //handlers
   return (
     <div className="mt-10">
