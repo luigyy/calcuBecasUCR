@@ -13,7 +13,7 @@ const Footer: React.FC<FooterProps> = ({}) => {
             If it was helpful, give the repo a star at{" "}
           </p>
           <a
-            href="https://github.com/luigyy"
+            href="https://github.com/luigyy/calcuBecasUCR"
             target="_blank"
             className="mx-auto md:m-0 text-3xl"
           >
