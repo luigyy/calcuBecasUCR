@@ -4,16 +4,14 @@ import { datesBetween } from "../functions/calcularMontos";
 
 interface DateWithAmountProps {
   reubicaException?: { date: Date };
-  // dates2: {
-  //   fechasAlimentacion: [{ startDate: Date; endDate: Date }];
-  //   fechasGastos: [{ startDate: Date; endDate: Date }];
-  // };
+  fechasDepositos: { alimentacion: Date; gastos: Date };
   dates: { startDate: Date; endDate: Date };
   fechasAlimentacion: { startDate: Date; endDate: Date };
   fechasGastos: { startDate: Date; endDate: Date };
   reubica: number;
   alimentacion: number;
   gastos: number;
+  desglose: boolean;
   calculatorFunc: (
     startDate: Date,
     endDate: Date,
@@ -32,8 +30,10 @@ const DateWithAmount: React.FC<DateWithAmountProps> = ({
   calculatorFunc,
   dates,
   reubicaException,
+  desglose,
   fechasAlimentacion,
   fechasGastos,
+  fechasDepositos,
 }) => {
   const formatDate = () => {
     const monthNames = [
@@ -51,8 +51,22 @@ const DateWithAmount: React.FC<DateWithAmountProps> = ({
       "Diciembre",
     ];
     const monthName = monthNames[dates.startDate.getMonth()];
-    const date = dates.startDate.getDate();
-    const formattedDate = monthName + ", " + date.toString();
+    const depositoAlimentacion = fechasDepositos.alimentacion.getDate();
+    const depositoGastos = fechasDepositos.gastos.getDate();
+    const formattedDate = (
+      <p>
+        {monthName} (
+        <span className={`${desglose ? "text-green-500" : ""}`}>
+          {depositoAlimentacion}
+        </span>
+        ,{" "}
+        <span className={`${desglose ? "text-red-500" : ""}`}>
+          {" "}
+          {depositoGastos}
+        </span>
+        );
+      </p>
+    );
     return formattedDate;
   };
   //
@@ -61,10 +75,12 @@ const DateWithAmount: React.FC<DateWithAmountProps> = ({
     return innerWidth;
   }
   //
+  const [exceptReubic, setExceptReubica] = useState<boolean>(false);
   const [totalAlimentacion, setTotalAlimentacion] = useState<number>(0);
   const [totalGastos, setTotalGastos] = useState<number>(0);
   const [windowSize, setWindowSize] = useState<number>(getWindowSize());
   const [total, setTotal] = useState<number>(0);
+  const [formattedDate, setFormattedDate] = useState<JSX.Element>(formatDate());
   //
   const calculateAlimentacion = () => {
     //calculate totalAlimentacion
@@ -93,16 +109,21 @@ const DateWithAmount: React.FC<DateWithAmountProps> = ({
     );
     setTotalGastos(tempGastos);
   };
-  //
-  const calculateTotal = () => {
-    var tempReubica = reubica;
+  const calculateReubicaException = () => {
     if (
       reubicaException &&
       reubicaException.date.toDateString() === dates.startDate.toDateString()
     ) {
-      tempReubica = 0;
+      setExceptReubica(true);
     }
-    setTotal(totalAlimentacion + totalGastos + tempReubica);
+  };
+
+  //
+  const calculateTotal = () => {
+    if (exceptReubic) {
+      return setTotal(totalAlimentacion + totalGastos);
+    }
+    return setTotal(totalAlimentacion + totalGastos + reubica);
   };
   //
   useEffect(() => {
@@ -131,6 +152,13 @@ const DateWithAmount: React.FC<DateWithAmountProps> = ({
     };
   }, []);
 
+  useEffect(() => {
+    setFormattedDate(formatDate());
+  }, [desglose]);
+
+  useEffect(() => {
+    calculateReubicaException();
+  }, []);
   //
   return (
     <div className="mt-5  ">
@@ -141,16 +169,45 @@ const DateWithAmount: React.FC<DateWithAmountProps> = ({
             "cubre " + datesBetween(dates.startDate, dates.endDate) + " dias"
           }
         >
-          {formatDate()}
+          {formattedDate}
           {/* {dates.startDate.toLocaleDateString("eu-GB")} */}
         </span>
         <span className="text-4xl my-2 flex justify-center text-center">
           {windowSize! > 768 ? <BsArrowDown /> : <BsArrowRight />}
         </span>
-        <span className="p-2 text-center border-primary">
-          {/* TODO: clean this */}
-          {total.toLocaleString()}₡
-        </span>
+        {desglose ? (
+          <div className="flex flex-col items-center">
+            <span
+              className="text-green-500 tooltip tooltip-right"
+              data-tip="alimentacion"
+            >
+              {totalAlimentacion} ₡
+            </span>
+            <span
+              className="text-red-500 tooltip tooltip-right"
+              data-tip="Gastos de carrera"
+            >
+              {totalGastos} ₡
+            </span>
+            <span>
+              {exceptReubic ? (
+                <p className="text-sm text-red-500 italic">Sin reubica</p>
+              ) : (
+                <p
+                  className="text-red-500 tooltip tooltip-right"
+                  data-tip="Reubica"
+                >
+                  {reubica} ₡
+                </p>
+              )}
+            </span>
+          </div>
+        ) : (
+          <span className="p-2 text-center border-primary">
+            {/* TODO: clean this */}
+            {total.toLocaleString()}₡
+          </span>
+        )}
       </div>
     </div>
   );

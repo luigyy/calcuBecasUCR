@@ -18,6 +18,11 @@ const depositos = {
       { startDate: new Date("01/31/2023"), endDate: new Date("02/15/2023") },
       { startDate: new Date("02/16/2023"), endDate: new Date("03/04/2023") },
     ],
+    fechasDepositos: [
+      { alimentacion: new Date("01/11/2023"), gastos: new Date("01/12/2023") },
+      { alimentacion: new Date("01/30/2023"), gastos: new Date("01/31/2023") },
+      { alimentacion: new Date("02/15/2023"), gastos: new Date("02/16/2023") },
+    ],
   },
 };
 const Main: React.FC<MainProps> = ({}) => {
@@ -37,6 +42,7 @@ const Main: React.FC<MainProps> = ({}) => {
   );
   const [reubica, setReubica] = useState<number>(montosSedeCentral.reubica);
   const [dates, setDates] = useState(depositos.verano22);
+  const [desglose, setDesglose] = useState<boolean>(false);
 
   //states
   //handlers
@@ -112,10 +118,23 @@ const Main: React.FC<MainProps> = ({}) => {
           inputHandler={handleGastos}
         />
       </div>
+      <div className="w-full ">
+        <div className="flex flex-col justify-center">
+          <p className="text-center my-2">Mostrar desglose</p>
+          <input
+            onChange={() => setDesglose(!desglose)}
+            checked={desglose}
+            type="checkbox"
+            className="toggle toggle-primary mx-auto text-center "
+          />
+        </div>
+      </div>
       {/* dates container  */}
-      <div className="mt-10 md:flex md:justify-around   w-full md:w-[90%] md:max-w-[700px] mx-auto py-5 px-10 ">
+      <div className="mt-7 md:flex md:justify-around   w-full md:w-[90%] md:max-w-[700px] mx-auto py-5 px-10 ">
         {dates.fechasAlimentacion.map((item, index) => (
           <DateWithAmount
+            desglose={desglose}
+            fechasDepositos={dates.fechasDepositos[index]}
             fechasAlimentacion={item}
             fechasGastos={dates.fechasGastos[index]}
             key={index}
