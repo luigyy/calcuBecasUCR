@@ -122,8 +122,10 @@ const DateWithAmount: React.FC<DateWithAmountProps> = ({
       reubicaException &&
       reubicaException.date.toDateString() === dates.startDate.toDateString()
     ) {
-      setExceptReubica(true);
+      return setExceptReubica(true);
     }
+
+    setExceptReubica(false);
   };
 
   //
@@ -165,16 +167,11 @@ const DateWithAmount: React.FC<DateWithAmountProps> = ({
 
   useEffect(() => {
     setFormattedDate(formatDate());
-  }, [desglose]);
+  }, [desglose, dates]);
 
   useEffect(() => {
     calculateReubicaException();
-  }, []);
-
-  useEffect(() => {
-    setFormattedDate(formatDate());
   }, [dates]);
-  //
 
   return (
     <div className="mt-5  ">

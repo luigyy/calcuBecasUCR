@@ -94,11 +94,9 @@ const Main: React.FC<MainProps> = ({}) => {
     setCurrentDatesIndex((prevState) =>
       prevState + 1 === lastIndex ? prevState : prevState + 1
     );
-    console.log("test: ", currentDatesIndex);
   };
   const handlePreviousCicle = () => {
     setCurrentDatesIndex((prevState) => (prevState === 0 ? 0 : prevState - 1));
-    console.log(currentDatesIndex);
   };
   //
   useEffect(() => {
@@ -229,7 +227,7 @@ const Main: React.FC<MainProps> = ({}) => {
         </div>
       </div>
       {/* dates container  */}
-      <div className="mt-7 md:flex md:justify-around   w-full md:w-[90%] md:max-w-[700px] mx-auto py-5 px-10 ">
+      <div className="my-7 md:flex md:justify-around w-full md:w-[90%] md:max-w-[800px] mx-auto py-5 px-10 ">
         {dates.fechasAlimentacion.map((item, index) => (
           <DateWithAmount
             currentDatesIndex={currentDatesIndex}
