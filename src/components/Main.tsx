@@ -3,11 +3,12 @@ import InputFields from "./InputFields";
 import DateWithAmount from "./DateWithAmount";
 import { montosSedeCentral } from "../data";
 import { calculate4, calculate5 } from "../functions/calcularMontos";
+import { FaLongArrowAltLeft, FaLongArrowAltRight } from "react-icons/fa";
 
 interface MainProps {}
 
-const depositos = {
-  verano22: {
+const depositos = [
+  {
     fechasAlimentacion: [
       { startDate: new Date("01/02/2023"), endDate: new Date("01/29/2023") },
       { startDate: new Date("01/30/2023"), endDate: new Date("02/14/2023") },
@@ -23,10 +24,12 @@ const depositos = {
       { alimentacion: new Date("01/30/2023"), gastos: new Date("01/31/2023") },
       { alimentacion: new Date("02/15/2023"), gastos: new Date("02/16/2023") },
     ],
+    nombre: "3º ciclo, 2022",
   },
-};
+];
 const Main: React.FC<MainProps> = ({}) => {
   //states
+  const [currentDatesIndex, setCurrentDatesIndex] = useState<number>(0);
   const [calculatorFunc, setCalculatorFunc] = useState<
     (
       startDate: Date,
@@ -42,7 +45,7 @@ const Main: React.FC<MainProps> = ({}) => {
     montosSedeCentral.alimentacion
   );
   const [reubica, setReubica] = useState<number>(montosSedeCentral.reubica);
-  const [dates, setDates] = useState(depositos.verano22); //ciclo
+  const [dates, setDates] = useState(depositos[currentDatesIndex]); //ciclo
   const [desglose, setDesglose] = useState<boolean>(false);
   const [alimentacionLunesADomingo, setAlimentacionLunesADomingo] =
     useState<boolean>(true);
@@ -65,6 +68,18 @@ const Main: React.FC<MainProps> = ({}) => {
     setReubica(parseInt(e.target.value));
   };
 
+  const handleNextCicle = () => {
+    const lastIndex = depositos.length;
+    setCurrentDatesIndex((prevState) =>
+      prevState + 1 === lastIndex ? prevState : prevState + 1
+    );
+    console.log("test: ", currentDatesIndex);
+  };
+  const handlePreviousCicle = () => {
+    setCurrentDatesIndex((prevState) => (prevState === 0 ? 0 : prevState - 1));
+    console.log(currentDatesIndex);
+  };
+  //
   useEffect(() => {
     if (beca === "4") {
       setCalculatorFunc(() => calculate4);
@@ -90,15 +105,39 @@ const Main: React.FC<MainProps> = ({}) => {
       setAlimentacionLunesADomingo(false);
     }
   }, [alimentacionLunesADomingo]);
+
+  useEffect(() => {
+    setDates(depositos[currentDatesIndex]);
+  }, [currentDatesIndex]);
   //handlers
   return (
     <div className="mt-10">
-      <h1 className="mt-5 text-center font-semibold text-lg">
+      <h1 className="mt-5 text-center font-semibold text-xl">
         Sede Rodrigo Facio
       </h1>
-      <h1 className="mt-5 text-center font-semibold">3º ciclo, 2022</h1>
-      <p className="text-[10px] text-center italic mb-3">
-        calculos para becas 4 y 5 son hechos incluyendo reubicacion geografica
+      <div className=" flex justify-center my-5 text-center items-center font-semibold gap-5 ">
+        <button
+          className="text-2xl rounded-2xl hover:bg-gray-200 p-3 tooltip tooltip-left"
+          data-tip="Ciclo anterior"
+          onClick={handlePreviousCicle}
+        >
+          {" "}
+          <FaLongArrowAltLeft />{" "}
+        </button>
+        {dates.nombre}
+        <button
+          className="text-2xl rounded-2xl hover:bg-gray-200 p-3 tooltip tooltip-right"
+          data-tip="Siguiente ciclo"
+          onClick={handleNextCicle}
+        >
+          <FaLongArrowAltRight />
+        </button>
+      </div>
+      <p className="text-[10px] text-center italic ">
+        *calculos para becas 4 y 5 son hechos incluyendo reubicacion geografica
+      </p>
+      <p className="text-[10px] text-center italic ">
+        *calculos hechos tomando en cuenta el aumento temporal
       </p>
       <div className="flex justify-around ">
         <div>
