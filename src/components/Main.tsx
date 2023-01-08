@@ -155,7 +155,7 @@ const Main: React.FC<MainProps> = ({}) => {
       <p className="text-[10px] text-center italic ">
         *calculos para becas 4 y 5 son hechos incluyendo reubicacion geografica
       </p>
-      <p className="text-[10px] text-center italic ">
+      <p className="mb-2 md:mb-0 text-[10px] text-center italic ">
         *calculos hechos tomando en cuenta el aumento temporal
       </p>
       <div className="flex justify-around ">
