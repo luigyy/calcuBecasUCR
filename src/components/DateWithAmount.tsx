@@ -3,6 +3,7 @@ import { BsArrowDown, BsArrowRight } from "react-icons/bs";
 import { datesBetween } from "../functions/calcularMontos";
 
 interface DateWithAmountProps {
+  currentDatesIndex: number;
   reubicaException?: { date: Date };
   fechasDepositos: { alimentacion: Date; gastos: Date };
   dates: { startDate: Date; endDate: Date };
@@ -37,6 +38,7 @@ const DateWithAmount: React.FC<DateWithAmountProps> = ({
   fechasGastos,
   fechasDepositos,
   alimentacionLunesADomingo,
+  currentDatesIndex,
 }) => {
   const formatDate = () => {
     const monthNames = [
@@ -144,6 +146,8 @@ const DateWithAmount: React.FC<DateWithAmountProps> = ({
     totalAlimentacion,
     totalGastos,
     alimentacionLunesADomingo,
+    currentDatesIndex,
+    dates,
   ]);
   //
   //
@@ -166,7 +170,12 @@ const DateWithAmount: React.FC<DateWithAmountProps> = ({
   useEffect(() => {
     calculateReubicaException();
   }, []);
+
+  useEffect(() => {
+    setFormattedDate(formatDate());
+  }, [dates]);
   //
+
   return (
     <div className="mt-5  ">
       <div className="flex items-center justify-around md:flex-col  w-full mx-auto">

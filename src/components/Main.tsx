@@ -26,6 +26,27 @@ const depositos = [
     ],
     nombre: "3º ciclo, 2022",
   },
+  {
+    fechasAlimentacion: [
+      { startDate: new Date("03/13/2023"), endDate: new Date("04/12/2023") },
+      { startDate: new Date("04/13/2023"), endDate: new Date("05/01/2023") },
+      { startDate: new Date("05/02/2023"), endDate: new Date("05/30/2023") },
+      { startDate: new Date("06/01/2023"), endDate: new Date("07/15/2023") },
+    ],
+    fechasGastos: [
+      { startDate: new Date("03/13/2023"), endDate: new Date("04/13/2023") },
+      { startDate: new Date("04/14/2023"), endDate: new Date("05/02/2023") },
+      { startDate: new Date("05/03/2023"), endDate: new Date("06/1/2023") },
+      { startDate: new Date("06/02/2023"), endDate: new Date("07/15/2023") },
+    ],
+    fechasDepositos: [
+      { alimentacion: new Date("03/16/2023"), gastos: new Date("03/17/2023") },
+      { alimentacion: new Date("04/13/2023"), gastos: new Date("04/14/2023") },
+      { alimentacion: new Date("05/02/2023"), gastos: new Date("05/03/2023") },
+      { alimentacion: new Date("06/01/2023"), gastos: new Date("06/02/2023") },
+    ],
+    nombre: "1º ciclo, 2023",
+  },
 ];
 const Main: React.FC<MainProps> = ({}) => {
   //states
@@ -211,6 +232,7 @@ const Main: React.FC<MainProps> = ({}) => {
       <div className="mt-7 md:flex md:justify-around   w-full md:w-[90%] md:max-w-[700px] mx-auto py-5 px-10 ">
         {dates.fechasAlimentacion.map((item, index) => (
           <DateWithAmount
+            currentDatesIndex={currentDatesIndex}
             alimentacionLunesADomingo={alimentacionLunesADomingo}
             desglose={desglose}
             fechasDepositos={dates.fechasDepositos[index]}
